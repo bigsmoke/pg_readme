@@ -1,10 +1,11 @@
----
-pg_extension_name: pg_readme
-pg_extension_version: 0.1.2
-pg_readme_generated_at: 2022-12-03 10:25:05.044072+00
-pg_readme_version: 0.1.2
----
+-- complain if script is sourced in psql, rather than via CREATE EXTENSION
+\echo Use "CREATE EXTENSION pg_readme" to load this file. \quit
 
+--------------------------------------------------------------------------------------------------------------
+
+comment
+    on extension pg_readme
+    is $markdown$
 # `pg_readme`
 
 The `pg_readme` PostgreSQL extension provides functions to generate
@@ -100,42 +101,9 @@ forget to send me the pull requests for you enhancements.
 * Table synopsis is not generated yet.
 * (Composite) type and domain descriptions are not implemented.
 
-## Object reference
+<?pg-readme-reference?>
 
-### Routines
+<?pg-readme-colophon?>
+$markdown$;
 
-#### Function: `readme.pg_extension_readme(name)`
-
-#### Function: `readme.pg_installed_extension_version(name)`
-
-#### Function: `readme.pg_readme_colophon(readme.pg_readme_collection_type,name,smallint,boolean,text)`
-
-#### Function: `readme.pg_readme_object_reference(readme.pg_readme_objects_for_reference,readme.pg_readme_collection_type,name,smallint,boolean,text)`
-
-#### Function: `readme.pg_readme_pi_pseudo_attrs(text,text)`
-
-#### Function: `readme.pg_readme_pis_process(text,readme.pg_readme_collection_type,name,readme.pg_readme_objects_for_reference)`
-
-#### Function: `readme.pg_schema_readme(regnamespace)`
-
-#### Procedure: `readme.test__pg_readme()`
-
-#### Procedure: `readme.test__pg_readme_pi_pseudo_attrs()`
-
-### Types
-
-The following extra types have been defined _besides_ the implicit composite types of the [tables](#tables) and [views](#views) in this extension.
-
-#### Type: `readme.pg_readme_objects_for_reference`
-
-TODO: automatic type synopsis in `pg_readme_object_reference()`.
-
-#### Type: `readme.pg_readme_collection_type`
-
-TODO: automatic type synopsis in `pg_readme_object_reference()`.
-
-## Colophon
-
-This `README.md` for the `pg_readme` `extension` was automatically generated using the
-[`pg_readme`](https://github.com/bigsmoke/pg_readme) PostgreSQL
-extension.
+--------------------------------------------------------------------------------------------------------------
