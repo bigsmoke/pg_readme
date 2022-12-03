@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.1.0
-pg_readme_generated_at: 2022-12-02 12:39:06.385195+00
-pg_readme_version: 0.1.0
+pg_extension_version: 0.1.1
+pg_readme_generated_at: 2022-12-03 09:50:26.741217+00
+pg_readme_version: 0.1.1
 ---
 
 # `pg_readme`
@@ -21,37 +21,44 @@ system catalog.
 | `pg_readme.include_routine_definitions`  | `false`  |
 | `pg_readme.include_view_definitions`     | `true`   |
 
+## Missing features
+
+* Support for `<?pg-readme-install?>` PI.
+* `pg_schema_readme(regnamespace)` is not actually implemented yet.
+* Table synopsis is not generated yet.
+* (Composite) type and domain descriptions are not implemented.
+
 ## Object reference
 
 ### Routines
 
-#### Function: `public.pg_extension_readme(name)`
+#### Function: `readme.pg_extension_readme(name)`
 
-#### Function: `public.pg_installed_extension_version(name)`
+#### Function: `readme.pg_installed_extension_version(name)`
 
-#### Function: `public.pg_readme_colophon(public.pg_readme_collection_type,name,smallint,boolean,text)`
+#### Function: `readme.pg_readme_colophon(readme.pg_readme_collection_type,name,smallint,boolean,text)`
 
-#### Function: `public.pg_readme_object_reference(public.pg_readme_objects_for_reference,public.pg_readme_collection_type,name,smallint,boolean,text)`
+#### Function: `readme.pg_readme_object_reference(readme.pg_readme_objects_for_reference,readme.pg_readme_collection_type,name,smallint,boolean,text)`
 
-#### Function: `public.pg_readme_pi_pseudo_attrs(text,text)`
+#### Function: `readme.pg_readme_pi_pseudo_attrs(text,text)`
 
-#### Function: `public.pg_readme_pis_process(text,public.pg_readme_collection_type,name,public.pg_readme_objects_for_reference)`
+#### Function: `readme.pg_readme_pis_process(text,readme.pg_readme_collection_type,name,readme.pg_readme_objects_for_reference)`
 
-#### Function: `public.pg_schema_readme(regnamespace)`
+#### Function: `readme.pg_schema_readme(regnamespace)`
 
-#### Procedure: `public.test__pg_readme()`
+#### Procedure: `readme.test__pg_readme()`
 
-#### Procedure: `public.test__pg_readme_pi_pseudo_attrs()`
+#### Procedure: `readme.test__pg_readme_pi_pseudo_attrs()`
 
 ### Types
 
 The following extra types have been defined _besides_ the implicit composite types of the [tables](#tables) and [views](#views) in this extension.
 
-#### Type: `public.pg_readme_objects_for_reference`
+#### Type: `readme.pg_readme_objects_for_reference`
 
 TODO: automatic type synopsis in `pg_readme_object_reference()`.
 
-#### Type: `public.pg_readme_collection_type`
+#### Type: `readme.pg_readme_collection_type`
 
 TODO: automatic type synopsis in `pg_readme_object_reference()`.
 

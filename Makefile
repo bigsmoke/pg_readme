@@ -9,5 +9,5 @@ PG_CONFIG = pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
 
-README.md: README.sql $(DATA)
+README.md: README.sql install
 	psql --quiet postgres < $< > $@

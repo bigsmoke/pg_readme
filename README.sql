@@ -3,8 +3,12 @@
 
 begin;
 
-create extension pg_readme cascade;
+create schema readme;
 
-select pg_extension_readme('pg_readme');
+create extension pg_readme
+    with schema readme
+    cascade;
+
+select readme.pg_extension_readme('pg_readme');
 
 rollback;
