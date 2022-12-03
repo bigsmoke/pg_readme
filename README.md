@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.1.2
-pg_readme_generated_at: 2022-12-03 10:25:05.044072+00
-pg_readme_version: 0.1.2
+pg_extension_version: 0.1.3
+pg_readme_generated_at: 2022-12-03 13:38:29.059745+00
+pg_readme_version: 0.1.3
 ---
 
 # `pg_readme`
