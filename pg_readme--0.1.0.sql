@@ -468,6 +468,7 @@ $plpgsql$;
 --------------------------------------------------------------------------------------------------------------
 
 create procedure test__pg_readme()
+    set plpgsql.check_asserts to true
     language plpgsql
     as $plpgsql$
 begin

@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.1.3
-pg_readme_generated_at: 2022-12-03 13:38:29.059745+00
-pg_readme_version: 0.1.3
+pg_extension_version: 0.2.0
+pg_readme_generated_at: 2022-12-08 10:19:30.880248+00
+pg_readme_version: 0.2.0
 ---
 
 # `pg_readme`
@@ -96,9 +96,9 @@ forget to send me the pull requests for you enhancements.
 ## Missing features
 
 * Support for `<?pg-readme-install?>` PI.
-* `pg_schema_readme(regnamespace)` is not actually implemented yet.
 * Table synopsis is not generated yet.
 * (Composite) type and domain descriptions are not implemented.
+* Function return signatures and `IN`/`INOUT` arguments are not yet described.
 
 ## Object reference
 
