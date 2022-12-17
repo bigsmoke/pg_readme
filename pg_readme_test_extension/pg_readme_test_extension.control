@@ -14,7 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with `pg_readme`. If not, see <https://www.gnu.org/licenses/>.
 
-default_version = '0.3.0'
-requires = 'hstore'
+default_version = 'forever'
 superuser = false
 relocatable = true

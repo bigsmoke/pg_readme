@@ -1,11 +1,11 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.2.0
-pg_readme_generated_at: 2022-12-08 10:19:30.880248+00
-pg_readme_version: 0.2.0
+pg_extension_version: 0.3.0
+pg_readme_generated_at: 2022-12-17 16:10:30.955169+00
+pg_readme_version: 0.3.0
 ---
 
-# `pg_readme`
+# The `pg_readme` PostgreSQL extension
 
 The `pg_readme` PostgreSQL extension provides functions to generate
 a `README.md` document for a database extension or schema, based on
@@ -18,8 +18,8 @@ system catalog.
 
 To use `pg_readme` in your extension, the most self-documenting way to do it is
 to create a function that calls the `readme.pg_extension_readme(name)`
-function.  Here is an example from
-[`pg_rowalesce`](https://github.com/bigsmoke/pg_rowalesce):
+function.  Here is an example take from the
+[`pg_rowalesce`](https://github.com/bigsmoke/pg_rowalesce) extension:
 
 ```sql
 create function pg_rowalesce_readme()
@@ -27,7 +27,7 @@ create function pg_rowalesce_readme()
     volatile
     set search_path from current
     set pg_readme.include_view_definitions to 'true'
-    set pg_readme.include_routine_definitions to 'false'
+    set pg_readme.include_routine_definition_like to '{test__%}'
     language plpgsql
     as $plpgsql$
 declare
@@ -86,56 +86,332 @@ make README.md
 `COMMENT` (also on your extension), play with it, and never go back.  And don't
 forget to send me the pull requests for you enhancements.
 
+## Processing instructions
+
+`pg_readme` has support for a bunch of special XML processing instructions that
+you can include in the Markdown `COMMENT ON EXTENSION` or `COMMENT ON SCHEMA`
+objects:
+
+  * `&lt;?pg-readme-reference?&gt;` will be replaced with a full references
+    with all the objects found by `pg_readme` that belong to the schema or
+    extension (when `pg_schema_readme()` or `pg_extension_readme()` are run
+    respectively.
+  * `&lt;?pg-readme-colophon?&gt;` adds a colophon with information about
+    `pg_readme` to the text.
+
+The following pseudo-attributes are supported for these processing instructions:
+
+| Pseudo-attribute           | Coerced to | Default value                        |
+| -------------------------- | ---------- | ------------------------------------ |
+| `context-division-depth`   | `smallint` | `1`                                  |
+| `context-division-is-self` | `boolean`  | `false`                              |
+| `division-title`           | `text`     | `'Object reference'` / `'Colophon'`  |
+
+(These attributes are called _pseudo-attributes_, because the XML spec does not
+prescribe any particular structure for a processing instruction's content.
+
 ## Extension-specific settings
 
-| Setting                                  | Default  |
-| ---------------------------------------- | -------- |
-| `pg_readme.include_routine_definitions`  | `false`  |
-| `pg_readme.include_view_definitions`     | `true`   |
+| Setting                                      | Default                                                         |
+| -------------------------------------------- | --------------------------------------------------------------- |
+| `pg_readme.include_view_definitions`         | `true`                                                          |
+| `pg_readme.readme_url`                       | `'https://github.com/bigsmoke/pg_readme/blob/master/README.md'` |
+| `pg_readme.include_routine_definitions_like` | `'{test__%}'`                                                   |
+| `pg_readme.include_this_routine_definition`  | `null`                                                          |
+
+`pg_readme.include_this_routine_definition` is meant to be only used on a
+routine-local level to make sure that the definition for that particular
+routine is either _always_ or _never_ included in the reference, regardless of
+the `pg_readme.include_routine_definitions_like` setting.
+
+For `pg_readme` version 0.3.0, `pg_readme.include_routine_definitions` has been
+deprecated in favor of `pg_readme.include_routine_definitions_like`, and
+`pg_readme.include_routine_definitions` is now interpreted as:
+
+| Legacy setting                                  | Deduced setting                                                 |
+| ----------------------------------------------- | --------------------------------------------------------------- |
+| `pg_readme.include_routine_definitions is null` | `pg_readme.include_routine_definitions_like = array['test__%']` |
+| `pg_readme.include_routine_definitions = true`  | `pg_readme.include_routine_definitions_like = array['%']`       |
+| `pg_readme.include_routine_definitions = false` | `pg_readme.include_routine_definitions_like = array[]::text[]`  |
 
 ## Missing features
 
 * Support for `<?pg-readme-install?>` PI.
 * Table synopsis is not generated yet.
 * (Composite) type and domain descriptions are not implemented.
-* Function return signatures and `IN`/`INOUT` arguments are not yet described.
 
 ## Object reference
 
 ### Routines
 
-#### Function: `readme.pg_extension_readme(name)`
+#### Function: `pg_extension_readme(name)`
 
-#### Function: `readme.pg_installed_extension_version(name)`
+`pg_extension_readme()` automatically generates a `README.md` for the given
+extension, taking the `COMMENT ON EXTENSION` as the prelude, and optionally
+adding a full reference (with neatly layed out object characteristics from the
+`pg_catalog`) in the place where a `&lt;?pg-readme-reference?&gt;`
+processing instruction is encountered in the `COMMENT ON EXTENSION'.
 
-#### Function: `readme.pg_readme_colophon(readme.pg_readme_collection_type,name,smallint,boolean,text)`
+See the [_Processing instructions_](#processing-instructions) section for
+details about the processing instructions that are recognized and which
+pseudo-attributes they support.
 
-#### Function: `readme.pg_readme_object_reference(readme.pg_readme_objects_for_reference,readme.pg_readme_collection_type,name,smallint,boolean,text)`
+Function arguments:
 
-#### Function: `readme.pg_readme_pi_pseudo_attrs(text,text)`
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` |                                                                   | `name`                                                               |                     |
 
-#### Function: `readme.pg_readme_pis_process(text,readme.pg_readme_collection_type,name,readme.pg_readme_objects_for_reference)`
+Function return type: `text`
 
-#### Function: `readme.pg_schema_readme(regnamespace)`
+Function attributes: `STABLE`
 
-#### Procedure: `readme.test__pg_readme()`
+Function-local settings:
 
-#### Procedure: `readme.test__pg_readme_pi_pseudo_attrs()`
+  *  `SET search_path TO readme, ext, pg_temp`
+
+#### Function: `pg_installed_extension_version(name)`
+
+`pg_installed_extension_version()` returns the version string of the currently
+installed version of the given extension.
+
+Function arguments:
+
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` |                                                                   | `name`                                                               |                     |
+
+Function return type: `text`
+
+Function attributes: `STABLE`
+
+Function-local settings:
+
+  *  `SET pg_readme.include_this_routine_definition TO true`
+
+```
+CREATE OR REPLACE FUNCTION readme.pg_installed_extension_version(name)
+ RETURNS text
+ LANGUAGE sql
+ STABLE
+ SET "pg_readme.include_this_routine_definition" TO 'true'
+RETURN (SELECT pg_extension.extversion FROM pg_extension WHERE (pg_extension.extname = $1))
+```
+
+#### Function: `pg_readme_colophon(pg_readme_collection_type,name,smallint,boolean,text)`
+
+`pg_readme_colophon()` is a function internal to `pg_readme` that is used by
+`pg_readme_pis_process()` to replace `&lt;?pg-readme-colophon?&gt;` processing
+instructions with a standard colophon indicating that `pg_readme` was used to
+generate a schema or extension README.
+
+See the [_Processing instructions_](#processing-instructions) section for an
+overview of the processing instructions and their pseudo-attributes.
+
+Function arguments:
+
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |                     |
+|   `$2` |       `IN` | `collection_name$`                                                | `name`                                                               |                     |
+|   `$3` |       `IN` | `context_division_depth$`                                         | `smallint`                                                           | `1`                 |
+|   `$4` |       `IN` | `context_division_is_self$`                                       | `boolean`                                                            | `false`             |
+|   `$5` |       `IN` | `division_title$`                                                 | `text`                                                               | `'Colophon'::text`  |
+
+Function return type: `text`
+
+Function attributes: `IMMUTABLE`, `LEAKPROOF`, `PARALLEL SAFE`
+
+#### Function: `pg_readme_object_reference(pg_readme_objects_for_reference,pg_readme_collection_type,name,smallint,boolean,text)`
+
+`pg_readme_object_reference()` is a function internal to `pg_readme` that is
+delegated to by `pg_readme_pis_process()` to replace
+`&lt;?pg-readme-reference?&gt;` processing instructions with a standard
+colophon indicating that `pg_readme` was used to generate a schema or extension
+README.
+
+See the [_Processing instructions_](#processing-instructions) section for an
+overview of the processing instructions and their pseudo-attributes.
+
+Function arguments:
+
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` | `objects$`                                                        | `pg_readme_objects_for_reference`                                    |                     |
+|   `$2` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |                     |
+|   `$3` |       `IN` | `collection_name$`                                                | `name`                                                               |                     |
+|   `$4` |       `IN` | `context_division_depth$`                                         | `smallint`                                                           | `1`                 |
+|   `$5` |       `IN` | `context_division_is_self$`                                       | `boolean`                                                            | `false`             |
+|   `$6` |       `IN` | `division_title$`                                                 | `text`                                                               | `'Object reference' |
+
+Function return type: `text`
+
+Function attributes: `STABLE`
+
+Function-local settings:
+
+  *  `SET search_path TO readme, ext, pg_temp`
+
+#### Function: `pg_readme_object_reference__rel_attr_list(pg_class)`
+
+Function arguments:
+
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` |                                                                   | `pg_class`                                                           |                     |
+
+Function return type: `text`
+
+Function attributes: `STABLE`
+
+#### Function: `pg_readme_pi_pseudo_attrs(text,text)`
+
+`pg_readme_pi_pseudo_attrs()` extracts the pseudo-attributes from the XML
+processing instruction with the given `pi_target$` found in the
+given`haystack$` argument.
+
+See the `test__pg_readme_pi_pseudo_attrs()` procedure source for examples.
+
+Function arguments:
+
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` | `haystack$`                                                       | `text`                                                               |                     |
+|   `$2` |       `IN` | `pi_target$`                                                      | `text`                                                               |                     |
+
+Function return type: `hstore`
+
+Function attributes: `IMMUTABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`, `PARALLEL SAFE`
+
+#### Function: `pg_readme_pis_process(text,pg_readme_collection_type,name,pg_readme_objects_for_reference)`
+
+`pg_readme_object_reference()` is a function internal to `pg_readme` that is
+responsible for replacing processing instructions in the source text with
+generated content.
+
+See the [_Processing instructions_](#processing-instructions) section for an
+overview of the processing instructions and their pseudo-attributes.
+
+Function arguments:
+
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` | `unprocessed$`                                                    | `text`                                                               |                     |
+|   `$2` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |                     |
+|   `$3` |       `IN` | `collection_name$`                                                | `name`                                                               |                     |
+|   `$4` |       `IN` | `objects$`                                                        | `pg_readme_objects_for_reference`                                    |                     |
+
+Function return type: `text`
+
+Function attributes: `STABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`, `PARALLEL SAFE`
+
+Function-local settings:
+
+  *  `SET search_path TO readme, ext, pg_temp`
+
+#### Function: `pg_schema_readme(regnamespace)`
+
+`pg_schema_readme()` automatically generates a `README.md` for the given
+schema, taking the `COMMENT ON SCHEMA` as the prelude, and optionally adding a
+full reference (with neatly layed out object characteristics from the
+`pg_catalog`) in the place where a `&lt;?pg-readme-reference?&gt;` processing
+instruction is encountered in the `COMMENT ON SCHEMA'.
+
+See the [_Processing instructions_](#processing-instructions) section for
+details about the processing instructions that are recognized and which
+pseudo-attributes they support.
+
+Function arguments:
+
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` |                                                                   | `regnamespace`                                                       |                     |
+
+Function return type: `text`
+
+Function attributes: `STABLE`
+
+Function-local settings:
+
+  *  `SET search_path TO readme, ext, pg_temp`
+
+#### Function: `string_diff(text,text)`
+
+Function arguments:
+
+| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
+| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
+|   `$1` |       `IN` |                                                                   | `text`                                                               |                     |
+|   `$2` |       `IN` |                                                                   | `text`                                                               |                     |
+
+Function return type: `text`
+
+Function attributes: `IMMUTABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`
+
+#### Procedure: `test__pg_readme()`
+
+This routine tests the `pg_readme` extension.
+
+The routine name is compliant with the `pg_tst` extension. An intentional
+choice has been made to not _depend_ on the `pg_tst` extension its test runner
+or developer-friendly assertions to keep the number of inter-extension
+dependencies to a minimum.
+
+Procedure-local settings:
+
+  *  `SET search_path TO readme, ext, pg_temp`
+  *  `SET pg_readme.include_this_routine_definition TO false`
+  *  `SET plpgsql.check_asserts TO true`
+
+#### Procedure: `test__pg_readme_pi_pseudo_attrs()`
+
+This routine tests the `pg_readme_pi_pseudo_attrs()` function.
+
+The routine name is compliant with the `pg_tst` extension. An intentional
+choice has been made to not _depend_ on the `pg_tst` extension its test runner
+or developer-friendly assertions to keep the number of inter-extension
+dependencies to a minimum.
+
+Procedure-local settings:
+
+  *  `SET search_path TO readme, ext, pg_temp`
+
+```
+CREATE OR REPLACE PROCEDURE readme.test__pg_readme_pi_pseudo_attrs()
+ LANGUAGE plpgsql
+ SET search_path TO 'readme', 'ext', 'pg_temp'
+AS $procedure$
+begin
+    assert pg_readme_pi_pseudo_attrs(
+        '<?muizen-stapje soort="woelmuis" hem-of-haar="piep" a1="4"?>',
+        'muizen-stapje'
+    ) = hstore('soort=>woelmuis, hem-of-haar=>piep, a1=>4');
+
+    assert pg_readme_pi_pseudo_attrs(
+        'Blabla bla <?muizen-stapje soort="woelmuis" hem-of-haar="piep"?> Frotsepots',
+        'muizen-stapje'
+    ) = hstore('soort=>woelmuis, hem-of-haar=>piep');
+
+    assert pg_readme_pi_pseudo_attrs(
+        'Blabla bla <?muizen-stapje ?> Frotsepots',
+        'muizen-stapje'
+    ) is null;
+end;
+$procedure$
+```
 
 ### Types
 
 The following extra types have been defined _besides_ the implicit composite types of the [tables](#tables) and [views](#views) in this extension.
 
-#### Type: `readme.pg_readme_objects_for_reference`
+#### Type: `pg_readme_objects_for_reference`
 
 TODO: automatic type synopsis in `pg_readme_object_reference()`.
 
-#### Type: `readme.pg_readme_collection_type`
+#### Type: `pg_readme_collection_type`
 
 TODO: automatic type synopsis in `pg_readme_object_reference()`.
 
 ## Colophon
 
-This `README.md` for the `pg_readme` `extension` was automatically generated using the
-[`pg_readme`](https://github.com/bigsmoke/pg_readme) PostgreSQL
-extension.
+This `README.md` for the `pg_readme` `extension` was automatically generated using the [`pg_readme`](https://github.com/bigsmoke/pg_readme) PostgreSQL extension.
