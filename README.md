@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.3.0
-pg_readme_generated_at: 2022-12-17 16:10:30.955169+00
-pg_readme_version: 0.3.0
+pg_extension_version: 0.3.1
+pg_readme_generated_at: 2022-12-19 16:49:06.403757+00
+pg_readme_version: 0.3.1
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -85,6 +85,25 @@ make README.md
 
 `COMMENT` (also on your extension), play with it, and never go back.  And don't
 forget to send me the pull requests for you enhancements.
+
+## Markdown
+
+The `pg_readme` author has made the choice for Markdown, not out of love for
+Markdown, but out of practicality: Markdown, in all its neo-formal
+interprations, has become ubiquitous.  Also, it has a straight-forward
+fall-through to (X)HTML.  And we're not creating tech. books here (where TEI or
+DocBook would have been the superior choice); we're merely generating
+online/digital documentation on the basis of inline `COMMENT`s.
+
+To make the pain of Markdown's many competing extensions and implementations
+_somewhat_ bearable, `pg_readme` attempts to stick to those Markdown constructs
+that are valid both according to:
+
+  * [GitHub Flavored Markdown](https://github.github.com/gfm/) (GFM), and
+  * [CommonMark](https://commonmark.org/).
+
+“Attempts to”, because `pg_readme` relies heavily on MarkDown tables, which
+_are_ supported by GFM, but _not_ by CommonMark.
 
 ## Processing instructions
 
