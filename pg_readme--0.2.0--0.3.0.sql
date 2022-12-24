@@ -356,7 +356,7 @@ create or replace function pg_readme_colophon(
         );
 
 comment
-    on function pg_readme_colophon(readme.pg_readme_collection_type, name, smallint, bool, text)
+    on function pg_readme_colophon(pg_readme_collection_type, name, smallint, bool, text)
     is $markdown$
 `pg_readme_colophon()` is a function internal to `pg_readme` that is used by
 `pg_readme_pis_process()` to replace `&lt;?pg-readme-colophon?&gt;` processing
