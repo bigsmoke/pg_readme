@@ -1,0 +1,52 @@
+{
+    "name": "pg_readme",
+    "tags": [
+        "documentation",
+        "markdown",
+        "meta",
+        "plpgsql",
+        "function",
+        "functions"
+    ],
+    "license": "gpl_3",
+    "prereqs": {
+        "test": {
+            "requires": {
+                "pgtap": 0
+            }
+        },
+        "runtime": {
+            "requires": {
+                "hstore": 0
+            }
+        }
+    },
+    "version": "0.3.2",
+    "abstract": "Generates a Markdown README from COMMENT objects found in the pg_description system catalog.",
+    "provides": {
+        "pg_readme": {
+            "file": "pg_readme--0.1.0.sql",
+            "docfile": "README.md",
+            "version": "0.3.2"
+        }
+    },
+    "meta-spec": {
+        "url": "https://pgxn.org/spec/",
+        "version": "1.0.0"
+    },
+    "resources": {
+        "homepage": "https://blog.bigsmoke.us/tag/pg_readme",
+        "bugtracker": {
+            "web": "https://github.com/bigsmoke/pg_readme/issues"
+        },
+        "repository": {
+            "url": "https://github.com/bigsmoke/pg_readme.git",
+            "web": "https://github.com/bigsmoke/pg_readme",
+            "type": "git"
+        }
+    },
+    "maintainer": [
+        "Rowan Rodrik van der Molen <rowan@bigsmoke.us>"
+    ],
+    "description": "The pg_readme PostgreSQL extension provides functions to generate a README.md document for a database extension or schema, based on COMMENT objects found in the pg_description system catalog."
+}

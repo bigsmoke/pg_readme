@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.3.1
-pg_readme_generated_at: 2022-12-19 16:49:06.403757+00
-pg_readme_version: 0.3.1
+pg_extension_version: 0.3.2
+pg_readme_generated_at: 2022-12-29 20:08:02.676884+00
+pg_readme_version: 0.3.2
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -163,7 +163,7 @@ deprecated in favor of `pg_readme.include_routine_definitions_like`, and
 
 ### Routines
 
-#### Function: `pg_extension_readme(name)`
+#### Function: `pg_extension_readme (name)`
 
 `pg_extension_readme()` automatically generates a `README.md` for the given
 extension, taking the `COMMENT ON EXTENSION` as the prelude, and optionally
@@ -179,7 +179,7 @@ Function arguments:
 
 | Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
 | ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` |                                                                   | `name`                                                               |                     |
+|   `$1` |       `IN` |                                                                   | `name`                                                               |  |
 
 Function return type: `text`
 
@@ -189,35 +189,7 @@ Function-local settings:
 
   *  `SET search_path TO readme, ext, pg_temp`
 
-#### Function: `pg_installed_extension_version(name)`
-
-`pg_installed_extension_version()` returns the version string of the currently
-installed version of the given extension.
-
-Function arguments:
-
-| Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
-| ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` |                                                                   | `name`                                                               |                     |
-
-Function return type: `text`
-
-Function attributes: `STABLE`
-
-Function-local settings:
-
-  *  `SET pg_readme.include_this_routine_definition TO true`
-
-```
-CREATE OR REPLACE FUNCTION readme.pg_installed_extension_version(name)
- RETURNS text
- LANGUAGE sql
- STABLE
- SET "pg_readme.include_this_routine_definition" TO 'true'
-RETURN (SELECT pg_extension.extversion FROM pg_extension WHERE (pg_extension.extname = $1))
-```
-
-#### Function: `pg_readme_colophon(pg_readme_collection_type,name,smallint,boolean,text)`
+#### Function: `pg_readme_colophon (pg_readme_collection_type, name, smallint, boolean, text)`
 
 `pg_readme_colophon()` is a function internal to `pg_readme` that is used by
 `pg_readme_pis_process()` to replace `&lt;?pg-readme-colophon?&gt;` processing
@@ -231,17 +203,23 @@ Function arguments:
 
 | Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
 | ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |                     |
-|   `$2` |       `IN` | `collection_name$`                                                | `name`                                                               |                     |
-|   `$3` |       `IN` | `context_division_depth$`                                         | `smallint`                                                           | `1`                 |
-|   `$4` |       `IN` | `context_division_is_self$`                                       | `boolean`                                                            | `false`             |
-|   `$5` |       `IN` | `division_title$`                                                 | `text`                                                               | `'Colophon'::text`  |
+|   `$1` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |  |
+|   `$2` |       `IN` | `collection_name$`                                                | `name`                                                               |  |
+|   `$3` |       `IN` | `context_division_depth$`                                         | `smallint`                                                           | `1` |
+|   `$4` |       `IN` | `context_division_is_self$`                                       | `boolean`                                                            | `false` |
+|   `$5` |       `IN` | `division_title$`                                                 | `text`                                                               | `'Colophon'::text` |
 
 Function return type: `text`
 
 Function attributes: `IMMUTABLE`, `LEAKPROOF`, `PARALLEL SAFE`
 
-#### Function: `pg_readme_object_reference(pg_readme_objects_for_reference,pg_readme_collection_type,name,smallint,boolean,text)`
+#### Function: `pg_readme_meta_pgxn ()`
+
+Function return type: `jsonb`
+
+Function attributes: `STABLE`
+
+#### Function: `pg_readme_object_reference (pg_readme_objects_for_reference, pg_readme_collection_type, name, smallint, boolean, text)`
 
 `pg_readme_object_reference()` is a function internal to `pg_readme` that is
 delegated to by `pg_readme_pis_process()` to replace
@@ -256,12 +234,12 @@ Function arguments:
 
 | Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
 | ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` | `objects$`                                                        | `pg_readme_objects_for_reference`                                    |                     |
-|   `$2` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |                     |
-|   `$3` |       `IN` | `collection_name$`                                                | `name`                                                               |                     |
-|   `$4` |       `IN` | `context_division_depth$`                                         | `smallint`                                                           | `1`                 |
-|   `$5` |       `IN` | `context_division_is_self$`                                       | `boolean`                                                            | `false`             |
-|   `$6` |       `IN` | `division_title$`                                                 | `text`                                                               | `'Object reference' |
+|   `$1` |       `IN` | `objects$`                                                        | `pg_readme_objects_for_reference`                                    |  |
+|   `$2` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |  |
+|   `$3` |       `IN` | `collection_name$`                                                | `name`                                                               |  |
+|   `$4` |       `IN` | `context_division_depth$`                                         | `smallint`                                                           | `1` |
+|   `$5` |       `IN` | `context_division_is_self$`                                       | `boolean`                                                            | `false` |
+|   `$6` |       `IN` | `division_title$`                                                 | `text`                                                               | `'Object reference'::text` |
 
 Function return type: `text`
 
@@ -271,19 +249,19 @@ Function-local settings:
 
   *  `SET search_path TO readme, ext, pg_temp`
 
-#### Function: `pg_readme_object_reference__rel_attr_list(pg_class)`
+#### Function: `pg_readme_object_reference__rel_attr_list (pg_class)`
 
 Function arguments:
 
 | Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
 | ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` |                                                                   | `pg_class`                                                           |                     |
+|   `$1` |       `IN` |                                                                   | `pg_class`                                                           |  |
 
 Function return type: `text`
 
 Function attributes: `STABLE`
 
-#### Function: `pg_readme_pi_pseudo_attrs(text,text)`
+#### Function: `pg_readme_pi_pseudo_attrs (text, text)`
 
 `pg_readme_pi_pseudo_attrs()` extracts the pseudo-attributes from the XML
 processing instruction with the given `pi_target$` found in the
@@ -295,14 +273,14 @@ Function arguments:
 
 | Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
 | ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` | `haystack$`                                                       | `text`                                                               |                     |
-|   `$2` |       `IN` | `pi_target$`                                                      | `text`                                                               |                     |
+|   `$1` |       `IN` | `haystack$`                                                       | `text`                                                               |  |
+|   `$2` |       `IN` | `pi_target$`                                                      | `text`                                                               |  |
 
 Function return type: `hstore`
 
 Function attributes: `IMMUTABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`, `PARALLEL SAFE`
 
-#### Function: `pg_readme_pis_process(text,pg_readme_collection_type,name,pg_readme_objects_for_reference)`
+#### Function: `pg_readme_pis_process (text, pg_readme_collection_type, name, pg_readme_objects_for_reference)`
 
 `pg_readme_object_reference()` is a function internal to `pg_readme` that is
 responsible for replacing processing instructions in the source text with
@@ -315,10 +293,10 @@ Function arguments:
 
 | Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
 | ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` | `unprocessed$`                                                    | `text`                                                               |                     |
-|   `$2` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |                     |
-|   `$3` |       `IN` | `collection_name$`                                                | `name`                                                               |                     |
-|   `$4` |       `IN` | `objects$`                                                        | `pg_readme_objects_for_reference`                                    |                     |
+|   `$1` |       `IN` | `unprocessed$`                                                    | `text`                                                               |  |
+|   `$2` |       `IN` | `collection_type$`                                                | `pg_readme_collection_type`                                          |  |
+|   `$3` |       `IN` | `collection_name$`                                                | `name`                                                               |  |
+|   `$4` |       `IN` | `objects$`                                                        | `pg_readme_objects_for_reference`                                    |  |
 
 Function return type: `text`
 
@@ -328,7 +306,7 @@ Function-local settings:
 
   *  `SET search_path TO readme, ext, pg_temp`
 
-#### Function: `pg_schema_readme(regnamespace)`
+#### Function: `pg_schema_readme (regnamespace)`
 
 `pg_schema_readme()` automatically generates a `README.md` for the given
 schema, taking the `COMMENT ON SCHEMA` as the prelude, and optionally adding a
@@ -344,7 +322,7 @@ Function arguments:
 
 | Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
 | ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` |                                                                   | `regnamespace`                                                       |                     |
+|   `$1` |       `IN` |                                                                   | `regnamespace`                                                       |  |
 
 Function return type: `text`
 
@@ -354,20 +332,20 @@ Function-local settings:
 
   *  `SET search_path TO readme, ext, pg_temp`
 
-#### Function: `string_diff(text,text)`
+#### Function: `string_diff (text, text)`
 
 Function arguments:
 
 | Arg. # | Arg. mode  | Argument name                                                     | Argument type                                                        | Default expression  |
 | ------ | ---------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- | ------------------- |
-|   `$1` |       `IN` |                                                                   | `text`                                                               |                     |
-|   `$2` |       `IN` |                                                                   | `text`                                                               |                     |
+|   `$1` |       `IN` |                                                                   | `text`                                                               |  |
+|   `$2` |       `IN` |                                                                   | `text`                                                               |  |
 
 Function return type: `text`
 
 Function attributes: `IMMUTABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`
 
-#### Procedure: `test__pg_readme()`
+#### Procedure: `test__pg_readme ()`
 
 This routine tests the `pg_readme` extension.
 
@@ -382,7 +360,7 @@ Procedure-local settings:
   *  `SET pg_readme.include_this_routine_definition TO false`
   *  `SET plpgsql.check_asserts TO true`
 
-#### Procedure: `test__pg_readme_pi_pseudo_attrs()`
+#### Procedure: `test__pg_readme_pi_pseudo_attrs ()`
 
 This routine tests the `pg_readme_pi_pseudo_attrs()` function.
 
