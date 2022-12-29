@@ -21,13 +21,13 @@
             }
         }
     },
-    "version": "0.3.2",
+    "version": "0.3.3",
     "abstract": "Generates a Markdown README from COMMENT objects found in the pg_description system catalog.",
     "provides": {
         "pg_readme": {
             "file": "pg_readme--0.1.0.sql",
             "docfile": "README.md",
-            "version": "0.3.2"
+            "version": "0.3.3"
         }
     },
     "meta-spec": {
@@ -48,5 +48,6 @@
     "maintainer": [
         "Rowan Rodrik van der Molen <rowan@bigsmoke.us>"
     ],
-    "description": "The pg_readme PostgreSQL extension provides functions to generate a README.md document for a database extension or schema, based on COMMENT objects found in the pg_description system catalog."
+    "description": "The pg_readme PostgreSQL extension provides functions to generate a README.md document for a database extension or schema, based on COMMENT objects found in the pg_description system catalog.",
+    "generated_by": "`select pg_readme_meta_pgxn()`"
 }

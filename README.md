@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.3.2
-pg_readme_generated_at: 2022-12-29 20:08:02.676884+00
-pg_readme_version: 0.3.2
+pg_extension_version: 0.3.3
+pg_readme_generated_at: 2022-12-29 22:04:41.65284+00
+pg_readme_version: 0.3.3
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -214,6 +214,13 @@ Function return type: `text`
 Function attributes: `IMMUTABLE`, `LEAKPROOF`, `PARALLEL SAFE`
 
 #### Function: `pg_readme_meta_pgxn ()`
+
+Returns the JSON meta data that has to go into the `META.json` file needed for
+[PGXN—PostgreSQL Extension Network](https://pgxn.org/) packages.
+
+The `Makefile` includes a recipe to allow the developer to: `make META.json` to
+refresh the meta file with the function's current output, including the
+`default_version`.
 
 Function return type: `jsonb`
 
