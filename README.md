@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.3.4
-pg_readme_generated_at: 2022-12-29 22:07:34.210211+00
-pg_readme_version: 0.3.4
+pg_extension_version: 0.3.5
+pg_readme_generated_at: 2023-01-02 15:11:31.689381+00
+pg_readme_version: 0.3.5
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -187,7 +187,7 @@ Function attributes: `STABLE`
 
 Function-local settings:
 
-  *  `SET search_path TO readme, ext, pg_temp`
+  *  `SET search_path TO readme, public, pg_temp`
 
 #### Function: `pg_readme_colophon (pg_readme_collection_type, name, smallint, boolean, text)`
 
@@ -254,7 +254,7 @@ Function attributes: `STABLE`
 
 Function-local settings:
 
-  *  `SET search_path TO readme, ext, pg_temp`
+  *  `SET search_path TO readme, public, pg_temp`
 
 #### Function: `pg_readme_object_reference__rel_attr_list (pg_class)`
 
@@ -311,7 +311,7 @@ Function attributes: `STABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`, `PARAL
 
 Function-local settings:
 
-  *  `SET search_path TO readme, ext, pg_temp`
+  *  `SET search_path TO readme, public, pg_temp`
 
 #### Function: `pg_schema_readme (regnamespace)`
 
@@ -337,7 +337,7 @@ Function attributes: `STABLE`
 
 Function-local settings:
 
-  *  `SET search_path TO readme, ext, pg_temp`
+  *  `SET search_path TO readme, public, pg_temp`
 
 #### Function: `string_diff (text, text)`
 
@@ -363,7 +363,7 @@ dependencies to a minimum.
 
 Procedure-local settings:
 
-  *  `SET search_path TO readme, ext, pg_temp`
+  *  `SET search_path TO readme, public, pg_temp`
   *  `SET pg_readme.include_this_routine_definition TO false`
   *  `SET plpgsql.check_asserts TO true`
 
@@ -378,12 +378,12 @@ dependencies to a minimum.
 
 Procedure-local settings:
 
-  *  `SET search_path TO readme, ext, pg_temp`
+  *  `SET search_path TO readme, public, pg_temp`
 
 ```
 CREATE OR REPLACE PROCEDURE readme.test__pg_readme_pi_pseudo_attrs()
  LANGUAGE plpgsql
- SET search_path TO 'readme', 'ext', 'pg_temp'
+ SET search_path TO 'readme', 'public', 'pg_temp'
 AS $procedure$
 begin
     assert pg_readme_pi_pseudo_attrs(
