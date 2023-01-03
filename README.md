@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.3.5
-pg_readme_generated_at: 2023-01-02 15:11:31.689381+00
-pg_readme_version: 0.3.5
+pg_extension_version: 0.3.6
+pg_readme_generated_at: 2023-01-03 08:49:44.564342+00
+pg_readme_version: 0.3.6
 ---
 
 # The `pg_readme` PostgreSQL extension

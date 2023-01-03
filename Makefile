@@ -1,5 +1,4 @@
-# It technically _is_ a dir, but this works well enough to get its name:
-EXTENSION = $(strip $(notdir $(CURDIR)))
+EXTENSION = pg_readme
 
 SUBEXTENSION = pg_readme_test_extension
 
