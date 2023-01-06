@@ -67,7 +67,7 @@ create table my_table (
 );
 
 comment
-    on type my_table
+    on table my_table
     is $markdown$
 A table with a comment.
 $markdown$;
@@ -107,6 +107,26 @@ create view my_view as
     from
         my_table
     left outer join
+        my_2nd_table
+        on my_2nd_table.a = my_table.a;
+
+comment
+    on view my_view
+    is $markdown$
+The is a view _with_ a `COMMENT`.
+$markdown$;
+
+--------------------------------------------------------------------------------------------------------------
+
+create view view_without_comment as
+    select
+        my_table.a
+        ,my_table.b
+        ,my_2nd_table,c
+        ,my_table.z
+    from
+        my_table
+    inner join
         my_2nd_table
         on my_2nd_table.a = my_table.a;
 
