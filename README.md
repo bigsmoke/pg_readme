@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.3.7
-pg_readme_generated_at: 2023-01-06 12:18:33.290495+00
-pg_readme_version: 0.3.7
+pg_extension_version: 0.3.8
+pg_readme_generated_at: 2023-01-11 22:05:49.284699+00
+pg_readme_version: 0.3.8
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -153,11 +153,38 @@ deprecated in favor of `pg_readme.include_routine_definitions_like`, and
 | `pg_readme.include_routine_definitions = true`  | `pg_readme.include_routine_definitions_like = array['%']`       |
 | `pg_readme.include_routine_definitions = false` | `pg_readme.include_routine_definitions_like = array[]::text[]`  |
 
-## Missing features
+## To-dos and to-maybes
 
-* Support for `<?pg-readme-install?>` PI.
+### Missing features
+
 * Table synopsis is not generated yet.
-* (Composite) type and domain descriptions are not implemented.
+* (Composite) type and domain descriptions are not implemented yet.
+
+### Ideas for improvement
+
+* Support for `<?pg-readme-install?>` PI could be nice.
+* Support for a `<?pg-readme-table-rows?>` PI in the `COMMENT` of specific
+  tables could be a nice addition for extensions/schemas that have type-type
+  tables.
+* Automatically turning references to objects from other/builtin extensions or
+  schemas into links could be a plus.  But this might also render the raw markup
+  unreadable.  That, at least, would be a good argument against doing the same
+  for extension-local object references.
+
+## The origins of the `pg_readme` extension
+
+`pg_readme`, together with a decent number of other PostgreSQL extensions, was
+developed as part of the backend for the super-scalable [FlashMQ MQTT SaaS
+service](https://www.flashmq.com).  Bundling and releasing this code publically
+has:
+
+- made the PostgreSQL schema architecture cleaner, with fewer
+  interdependencies;
+- made the documentation more complete and up-to-date;
+- increased the amount of polish; and
+- reduced the number of rough edges.
+
+The public gaze does improve quality!
 
 ## Object reference
 
@@ -165,15 +192,9 @@ deprecated in favor of `pg_readme.include_routine_definitions_like`, and
 
 #### Function: `pg_extension_readme (name)`
 
-`pg_extension_readme()` automatically generates a `README.md` for the given
-extension, taking the `COMMENT ON EXTENSION` as the prelude, and optionally
-adding a full reference (with neatly layed out object characteristics from the
-`pg_catalog`) in the place where a `&lt;?pg-readme-reference?&gt;`
-processing instruction is encountered in the `COMMENT ON EXTENSION'.
+`pg_extension_readme()` automatically generates a `README.md` for the given extension, taking the `COMMENT ON EXTENSION` as the prelude, and optionally adding a full reference (with neatly layed out object characteristics from the `pg_catalog`) in the place where a `&lt;?pg-readme-reference?&gt;` processing instruction is encountered in the `COMMENT ON EXTENSION'.
 
-See the [_Processing instructions_](#processing-instructions) section for
-details about the processing instructions that are recognized and which
-pseudo-attributes they support.
+See the [_Processing instructions_](#processing-instructions) section for details about the processing instructions that are recognized and which pseudo-attributes they support.
 
 Function arguments:
 
@@ -191,13 +212,9 @@ Function-local settings:
 
 #### Function: `pg_readme_colophon (pg_readme_collection_type, name, smallint, boolean, text)`
 
-`pg_readme_colophon()` is a function internal to `pg_readme` that is used by
-`pg_readme_pis_process()` to replace `&lt;?pg-readme-colophon?&gt;` processing
-instructions with a standard colophon indicating that `pg_readme` was used to
-generate a schema or extension README.
+`pg_readme_colophon()` is a function internal to `pg_readme` that is used by `pg_readme_pis_process()` to replace `&lt;?pg-readme-colophon?&gt;` processing instructions with a standard colophon indicating that `pg_readme` was used to generate a schema or extension README.
 
-See the [_Processing instructions_](#processing-instructions) section for an
-overview of the processing instructions and their pseudo-attributes.
+See the [_Processing instructions_](#processing-instructions) section for an overview of the processing instructions and their pseudo-attributes.
 
 Function arguments:
 
@@ -215,8 +232,7 @@ Function attributes: `IMMUTABLE`, `LEAKPROOF`, `PARALLEL SAFE`
 
 #### Function: `pg_readme_meta_pgxn ()`
 
-Returns the JSON meta data that has to go into the `META.json` file needed for
-[PGXN—PostgreSQL Extension Network](https://pgxn.org/) packages.
+Returns the JSON meta data that has to go into the `META.json` file needed for [PGXN—PostgreSQL Extension Network](https://pgxn.org/) packages.
 
 The `Makefile` includes a recipe to allow the developer to: `make META.json` to
 refresh the meta file with the function's current output, including the
@@ -228,14 +244,9 @@ Function attributes: `STABLE`
 
 #### Function: `pg_readme_object_reference (pg_readme_objects_for_reference, pg_readme_collection_type, name, smallint, boolean, text)`
 
-`pg_readme_object_reference()` is a function internal to `pg_readme` that is
-delegated to by `pg_readme_pis_process()` to replace
-`&lt;?pg-readme-reference?&gt;` processing instructions with a standard
-colophon indicating that `pg_readme` was used to generate a schema or extension
-README.
+`pg_readme_object_reference()` is a function internal to `pg_readme` that is delegated to by `pg_readme_pis_process()` to replace `&lt;?pg-readme-reference?&gt;` processing instructions with a standard colophon indicating that `pg_readme` was used to generate a schema or extension README.
 
-See the [_Processing instructions_](#processing-instructions) section for an
-overview of the processing instructions and their pseudo-attributes.
+See the [_Processing instructions_](#processing-instructions) section for an overview of the processing instructions and their pseudo-attributes.
 
 Function arguments:
 
@@ -270,9 +281,7 @@ Function attributes: `STABLE`
 
 #### Function: `pg_readme_pi_pseudo_attrs (text, text)`
 
-`pg_readme_pi_pseudo_attrs()` extracts the pseudo-attributes from the XML
-processing instruction with the given `pi_target$` found in the
-given`haystack$` argument.
+`pg_readme_pi_pseudo_attrs()` extracts the pseudo-attributes from the XML processing instruction with the given `pi_target$` found in the given`haystack$` argument.
 
 See the `test__pg_readme_pi_pseudo_attrs()` procedure source for examples.
 
@@ -289,12 +298,9 @@ Function attributes: `IMMUTABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`, `PA
 
 #### Function: `pg_readme_pis_process (text, pg_readme_collection_type, name, pg_readme_objects_for_reference)`
 
-`pg_readme_object_reference()` is a function internal to `pg_readme` that is
-responsible for replacing processing instructions in the source text with
-generated content.
+`pg_readme_object_reference()` is a function internal to `pg_readme` that is responsible for replacing processing instructions in the source text with generated content.
 
-See the [_Processing instructions_](#processing-instructions) section for an
-overview of the processing instructions and their pseudo-attributes.
+See the [_Processing instructions_](#processing-instructions) section for an overview of the processing instructions and their pseudo-attributes.
 
 Function arguments:
 
@@ -315,15 +321,9 @@ Function-local settings:
 
 #### Function: `pg_schema_readme (regnamespace)`
 
-`pg_schema_readme()` automatically generates a `README.md` for the given
-schema, taking the `COMMENT ON SCHEMA` as the prelude, and optionally adding a
-full reference (with neatly layed out object characteristics from the
-`pg_catalog`) in the place where a `&lt;?pg-readme-reference?&gt;` processing
-instruction is encountered in the `COMMENT ON SCHEMA'.
+`pg_schema_readme()` automatically generates a `README.md` for the given schema, taking the `COMMENT ON SCHEMA` as the prelude, and optionally adding a full reference (with neatly layed out object characteristics from the `pg_catalog`) in the place where a `&lt;?pg-readme-reference?&gt;` processing instruction is encountered in the `COMMENT ON SCHEMA'.
 
-See the [_Processing instructions_](#processing-instructions) section for
-details about the processing instructions that are recognized and which
-pseudo-attributes they support.
+See the [_Processing instructions_](#processing-instructions) section for details about the processing instructions that are recognized and which pseudo-attributes they support.
 
 Function arguments:
 
@@ -356,10 +356,7 @@ Function attributes: `IMMUTABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`
 
 This routine tests the `pg_readme` extension.
 
-The routine name is compliant with the `pg_tst` extension. An intentional
-choice has been made to not _depend_ on the `pg_tst` extension its test runner
-or developer-friendly assertions to keep the number of inter-extension
-dependencies to a minimum.
+The routine name is compliant with the `pg_tst` extension. An intentional choice has been made to not _depend_ on the `pg_tst` extension its test runner or developer-friendly assertions to keep the number of inter-extension dependencies to a minimum.
 
 Procedure-local settings:
 
@@ -371,10 +368,7 @@ Procedure-local settings:
 
 This routine tests the `pg_readme_pi_pseudo_attrs()` function.
 
-The routine name is compliant with the `pg_tst` extension. An intentional
-choice has been made to not _depend_ on the `pg_tst` extension its test runner
-or developer-friendly assertions to keep the number of inter-extension
-dependencies to a minimum.
+The routine name is compliant with the `pg_tst` extension. An intentional choice has been made to not _depend_ on the `pg_tst` extension its test runner or developer-friendly assertions to keep the number of inter-extension dependencies to a minimum.
 
 Procedure-local settings:
 
