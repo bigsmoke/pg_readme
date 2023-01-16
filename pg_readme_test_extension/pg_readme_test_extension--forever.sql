@@ -33,10 +33,8 @@ $markdown$;
 create domain my_upper as text
     check (value = upper(value));
 
-comment
-    on domain my_upper
-    is $markdown$
-Must be uppercase text.
+comment on domain my_upper is
+$markdown$Must be uppercase text.
 $markdown$;
 
 --------------------------------------------------------------------------------------------------------------
@@ -46,10 +44,8 @@ create type my_composite_type as (
     ,created_at timestamptz
 );
 
-comment
-    on type my_composite_type
-    is $markdown$
-`my_composite_type` doesn't do much.
+comment on type my_composite_type is
+$markdown$`my_composite_type` doesn't do much.
 $markdown$;
 
 --------------------------------------------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.3.8
-pg_readme_generated_at: 2023-01-11 22:05:49.284699+00
-pg_readme_version: 0.3.8
+pg_extension_version: 0.4.0
+pg_readme_generated_at: 2023-01-16 13:10:06.797406+00
+pg_readme_version: 0.4.0
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -402,13 +402,24 @@ $procedure$
 
 The following extra types have been defined _besides_ the implicit composite types of the [tables](#tables) and [views](#views) in this extension.
 
-#### Type: `pg_readme_objects_for_reference`
+#### Composite type: `pg_readme_objects_for_reference`
 
-TODO: automatic type synopsis in `pg_readme_object_reference()`.
+```sql
+CREATE TYPE pg_readme_objects_for_reference AS (
+  table_objects regclass[],
+  view_objects regclass[],
+  procedure_objects regprocedure[],
+  operator_objects regoperator[],
+  type_objects regtype[]
+);
+```
 
-#### Type: `pg_readme_collection_type`
+#### Domain: `pg_readme_collection_type`
 
-TODO: automatic type synopsis in `pg_readme_object_reference()`.
+```sql
+CREATE DOMAIN pg_readme_collection_type AS text
+  CHECK ((VALUE = ANY (ARRAY['extension'::text, 'schema'::text])));
+```
 
 ## Colophon
 
