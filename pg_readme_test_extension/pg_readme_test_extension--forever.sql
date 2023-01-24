@@ -109,7 +109,7 @@ create view my_view as
 comment
     on view my_view
     is $markdown$
-The is a view _with_ a `COMMENT`.
+This is a view _with_ a `COMMENT`.
 $markdown$;
 
 --------------------------------------------------------------------------------------------------------------
