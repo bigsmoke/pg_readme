@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.5.2
-pg_readme_generated_at: 2023-01-24 14:23:52.913741+00
-pg_readme_version: 0.5.2
+pg_extension_version: 0.5.3
+pg_readme_generated_at: 2023-01-24 14:31:22.071904+00
+pg_readme_version: 0.5.3
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -112,9 +112,10 @@ you can include in the Markdown `COMMENT ON EXTENSION` or `COMMENT ON SCHEMA`
 objects:
 
   * <code>&lt;?pg-readme-reference?&gt;</code> will be replaced with a full
-    references with all the objects found by `pg_readme` that belong to the
-    schema or extension (when [`pg_schema_readme()`](#function-pg_schema_readme)
-    or [`pg_extension_readme()`](#function-pg_extension_readme) are run
+    reference with all the objects found by `pg_readme` that belong to the
+    schema or extension (when
+    [`pg_schema_readme()`](#function-pg_schema_readme-regnamespace) or
+    [`pg_extension_readme()`](#function-pg_extension_readme-name) are run
     respectively.
   * <code>&lt;?pg-readme-colophon?&gt;</code> adds a colophon with information
     about `pg_readme` to the text.
