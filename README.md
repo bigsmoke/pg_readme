@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.5.3
-pg_readme_generated_at: 2023-01-24 14:31:22.071904+00
-pg_readme_version: 0.5.3
+pg_extension_version: 0.5.4
+pg_readme_generated_at: 2023-01-24 16:49:43.170481+00
+pg_readme_version: 0.5.4
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -201,9 +201,11 @@ The public gaze does improve quality!
 
 #### Function: `pg_extension_readme (name)`
 
-`pg_extension_readme()` automatically generates a `README.md` for the given extension, taking the `COMMENT ON EXTENSION` as the prelude, and optionally adding a full reference (with neatly layed out object characteristics from the `pg_catalog`) in the place where a `&lt;?pg-readme-reference?&gt;` processing instruction is encountered in the `COMMENT ON EXTENSION'.
+`pg_extension_readme()` automatically generates a `README.md` for the given extension, taking the `COMMENT ON EXTENSION` as the prelude, and optionally adding a full reference (with neatly layed out object characteristics from the `pg_catalog`) in the place where a <code>&lt;?pg-readme-reference?&gt;</code> processing instruction is encountered in the `COMMENT ON EXTENSION`.
 
-See the [_Processing instructions_](#processing-instructions) section for details about the processing instructions that are recognized and which pseudo-attributes they support.
+See the [_Processing instructions_](#processing-instructions) section for
+details about the processing instructions that are recognized and which
+pseudo-attributes they support.
 
 Function arguments:
 
@@ -221,9 +223,10 @@ Function-local settings:
 
 #### Function: `pg_readme_colophon (pg_readme_collection_type, name, smallint, boolean, text)`
 
-`pg_readme_colophon()` is a function internal to `pg_readme` that is used by `pg_readme_pis_process()` to replace `&lt;?pg-readme-colophon?&gt;` processing instructions with a standard colophon indicating that `pg_readme` was used to generate a schema or extension README.
+`pg_readme_colophon()` is a function internal to `pg_readme` that is used by `pg_readme_pis_process()` to replace <code>&lt;?pg-readme-colophon?&gt;</code> processing instructions with a standard colophon indicating that `pg_readme` was used to generate a schema or extension README.
 
-See the [_Processing instructions_](#processing-instructions) section for an overview of the processing instructions and their pseudo-attributes.
+See the [_Processing instructions_](#processing-instructions) section for an
+overview of the processing instructions and their pseudo-attributes.
 
 Function arguments:
 
@@ -253,9 +256,10 @@ Function attributes: `STABLE`
 
 #### Function: `pg_readme_object_reference (pg_readme_objects_for_reference, pg_readme_collection_type, name, smallint, boolean, text)`
 
-`pg_readme_object_reference()` is a function internal to `pg_readme` that is delegated to by `pg_readme_pis_process()` to replace `&lt;?pg-readme-reference?&gt;` processing instructions with a standard colophon indicating that `pg_readme` was used to generate a schema or extension README.
+`pg_readme_object_reference()` is a function internal to `pg_readme` that is delegated to by `pg_readme_pis_process()` to replace <code>&lt;?pg-readme-reference?&gt;</code> processing instructions with a standard colophon indicating that `pg_readme` was used to generate a schema or extension README.
 
-See the [_Processing instructions_](#processing-instructions) section for an overview of the processing instructions and their pseudo-attributes.
+See the [_Processing instructions_](#processing-instructions) section for an
+overview of the processing instructions and their pseudo-attributes.
 
 Function arguments:
 
@@ -330,9 +334,11 @@ Function-local settings:
 
 #### Function: `pg_schema_readme (regnamespace)`
 
-`pg_schema_readme()` automatically generates a `README.md` for the given schema, taking the `COMMENT ON SCHEMA` as the prelude, and optionally adding a full reference (with neatly layed out object characteristics from the `pg_catalog`) in the place where a `&lt;?pg-readme-reference?&gt;` processing instruction is encountered in the `COMMENT ON SCHEMA'.
+`pg_schema_readme()` automatically generates a `README.md` for the given schema, taking the `COMMENT ON SCHEMA` as the prelude, and optionally adding a full reference (with neatly layed out object characteristics from the `pg_catalog`) in the place where a <code>&lt;?pg-readme-reference?&gt;</code> processing instruction is encountered in the `COMMENT ON SCHEMA`.
 
-See the [_Processing instructions_](#processing-instructions) section for details about the processing instructions that are recognized and which pseudo-attributes they support.
+See the [_Processing instructions_](#processing-instructions) section for
+details about the processing instructions that are recognized and which
+pseudo-attributes they support.
 
 Function arguments:
 
