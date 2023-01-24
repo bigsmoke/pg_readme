@@ -1,23 +1,3 @@
-/*
-This file is part of the `pg_readme` PostgreSQL extension.
-Copyright © 2022 Rowan Rodrik van der Molen.
-
-`pg_readme` is free software: you can redistribute it and/or modify it
-under the terms of the GNU Affero General Public License as published by the
-Free Software Foundation, either version 3 of the License, or (at your option)
-any later version.
-
- `pg_readme` is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for
-more details.
-
-You should have received a copy of the GNU Affero General Public License along
-with `pg_readme`. If not, see <https://www.gnu.org/licenses/>.
-*/
-
---------------------------------------------------------------------------------------------------------------
-
 -- complain if script is sourced in psql, rather than via CREATE EXTENSION
 \echo Use "CREATE EXTENSION pg_readme" to load this file. \quit
 
