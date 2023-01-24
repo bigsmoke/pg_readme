@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.5.1
-pg_readme_generated_at: 2023-01-24 14:04:45.916257+00
-pg_readme_version: 0.5.1
+pg_extension_version: 0.5.2
+pg_readme_generated_at: 2023-01-24 14:23:52.913741+00
+pg_readme_version: 0.5.2
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -111,12 +111,21 @@ _are_ supported by GFM, but _not_ by CommonMark.
 you can include in the Markdown `COMMENT ON EXTENSION` or `COMMENT ON SCHEMA`
 objects:
 
-  * `&lt;?pg-readme-reference?&gt;` will be replaced with a full references
-    with all the objects found by `pg_readme` that belong to the schema or
-    extension (when `pg_schema_readme()` or `pg_extension_readme()` are run
+  * <code>&lt;?pg-readme-reference?&gt;</code> will be replaced with a full
+    references with all the objects found by `pg_readme` that belong to the
+    schema or extension (when [`pg_schema_readme()`](#function-pg_schema_readme)
+    or [`pg_extension_readme()`](#function-pg_extension_readme) are run
     respectively.
-  * `&lt;?pg-readme-colophon?&gt;` adds a colophon with information about
-    `pg_readme` to the text.
+  * <code>&lt;?pg-readme-colophon?&gt;</code> adds a colophon with information
+    about `pg_readme` to the text.
+
+<!--
+<code></code> instead of `` is used to encode the above processing
+instructions to jump into raw HTML mode, so that the &lt; and &gt; entity
+references are not escaped.  And we need those entity references to keep
+pg_readme from putting the full object reference and the colophon in the middle
+of these list items.
+-->
 
 The following pseudo-attributes are supported for these processing instructions:
 
