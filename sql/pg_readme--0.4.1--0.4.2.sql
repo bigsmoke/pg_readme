@@ -3,6 +3,7 @@
 
 --------------------------------------------------------------------------------------------------------------
 
+-- Remove previously implemented feature from “Missing features” list.
 comment on extension pg_readme is
 $md$
 # The `pg_readme` PostgreSQL extension

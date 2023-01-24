@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.4.2
-pg_readme_generated_at: 2023-01-24 13:17:30.277486+00
-pg_readme_version: 0.4.2
+pg_extension_version: 0.5.0
+pg_readme_generated_at: 2023-01-24 13:49:39.203466+00
+pg_readme_version: 0.5.0
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -229,7 +229,7 @@ Function return type: `text`
 
 Function attributes: `IMMUTABLE`, `LEAKPROOF`, `PARALLEL SAFE`
 
-#### Function: `pg_readme_meta_pgxn ()`
+#### Function: `pg_readme_meta_pgxn()`
 
 Returns the JSON meta data that has to go into the `META.json` file needed for [PGXN—PostgreSQL Extension Network](https://pgxn.org/) packages.
 
@@ -351,7 +351,7 @@ Function return type: `text`
 
 Function attributes: `IMMUTABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`
 
-#### Procedure: `test__pg_readme ()`
+#### Procedure: `test__pg_readme()`
 
 This routine tests the `pg_readme` extension.
 
@@ -363,7 +363,7 @@ Procedure-local settings:
   *  `SET pg_readme.include_this_routine_definition TO false`
   *  `SET plpgsql.check_asserts TO true`
 
-#### Procedure: `test__pg_readme_pi_pseudo_attrs ()`
+#### Procedure: `test__pg_readme_pi_pseudo_attrs()`
 
 This routine tests the `pg_readme_pi_pseudo_attrs()` function.
 
