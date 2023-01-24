@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.5.0
-pg_readme_generated_at: 2023-01-24 13:49:39.203466+00
-pg_readme_version: 0.5.0
+pg_extension_version: 0.5.1
+pg_readme_generated_at: 2023-01-24 14:04:45.916257+00
+pg_readme_version: 0.5.1
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -422,4 +422,4 @@ CREATE DOMAIN pg_readme_collection_type AS text
 
 ## Colophon
 
-This `README.md` for the `pg_readme` `extension` was automatically generated using the [`pg_readme`](https://github.com/bigsmoke/pg_readme) PostgreSQL extension.
+This `README.md` for the `pg_readme` extension was automatically generated using the [`pg_readme`](https://github.com/bigsmoke/pg_readme) PostgreSQL extension.
