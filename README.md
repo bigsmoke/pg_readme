@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.4.1
-pg_readme_generated_at: 2023-01-24 13:11:53.745711+00
-pg_readme_version: 0.4.1
+pg_extension_version: 0.4.2
+pg_readme_generated_at: 2023-01-24 13:17:30.277486+00
+pg_readme_version: 0.4.2
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -158,7 +158,6 @@ deprecated in favor of `pg_readme.include_routine_definitions_like`, and
 ### Missing features
 
 * Table synopsis is not generated yet.
-* (Composite) type and domain descriptions are not implemented yet.
 
 ### Ideas for improvement
 
