@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.6.1
-pg_readme_generated_at: 2023-03-18 21:03:20.380359+00
-pg_readme_version: 0.6.1
+pg_extension_version: 0.6.2
+pg_readme_generated_at: 2023-05-09 15:24:11.519194+01
+pg_readme_version: 0.6.2
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -219,7 +219,7 @@ Function attributes: `STABLE`
 
 Function-local settings:
 
-  *  `SET search_path TO readme, public, pg_temp`
+  *  `SET search_path TO readme, ext, pg_temp`
 
 #### Function: `pg_readme_colophon (pg_readme_collection_type, name, smallint, boolean, text)`
 
@@ -278,7 +278,7 @@ Function attributes: `STABLE`
 
 Function-local settings:
 
-  *  `SET search_path TO readme, public, pg_temp`
+  *  `SET search_path TO readme, ext, pg_temp`
 
 #### Function: `pg_readme_object_reference__rel_attr_list (pg_class)`
 
@@ -330,7 +330,7 @@ Function attributes: `STABLE`, `LEAKPROOF`, `RETURNS NULL ON NULL INPUT`, `PARAL
 
 Function-local settings:
 
-  *  `SET search_path TO readme, public, pg_temp`
+  *  `SET search_path TO readme, ext, pg_temp`
 
 #### Function: `pg_schema_readme (regnamespace)`
 
@@ -352,7 +352,7 @@ Function attributes: `STABLE`
 
 Function-local settings:
 
-  *  `SET search_path TO readme, public, pg_temp`
+  *  `SET search_path TO readme, ext, pg_temp`
 
 #### Function: `string_diff (text, text)`
 
@@ -375,7 +375,7 @@ The routine name is compliant with the `pg_tst` extension. An intentional choice
 
 Procedure-local settings:
 
-  *  `SET search_path TO readme, public, pg_temp`
+  *  `SET search_path TO readme, ext, pg_temp`
   *  `SET pg_readme.include_this_routine_definition TO false`
   *  `SET plpgsql.check_asserts TO true`
 
@@ -387,12 +387,12 @@ The routine name is compliant with the `pg_tst` extension. An intentional choice
 
 Procedure-local settings:
 
-  *  `SET search_path TO readme, public, pg_temp`
+  *  `SET search_path TO readme, ext, pg_temp`
 
 ```sql
 CREATE OR REPLACE PROCEDURE readme.test__pg_readme_pi_pseudo_attrs()
  LANGUAGE plpgsql
- SET search_path TO 'readme', 'public', 'pg_temp'
+ SET search_path TO 'readme', 'ext', 'pg_temp'
 AS $procedure$
 begin
     assert pg_readme_pi_pseudo_attrs(
