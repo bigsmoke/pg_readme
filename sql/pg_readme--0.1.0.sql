@@ -35,6 +35,37 @@ $markdown$;
 
 --------------------------------------------------------------------------------------------------------------
 
+do $$
+begin
+    if not exists(
+        select from
+            pg_catalog.pg_proc
+        where
+            pg_proc.pronamespace = current_schema::regnamespace
+            and pg_proc.proname = 'pg_installed_extension_version'
+    )
+    then
+        create function pg_installed_extension_version(pg_catalog.name)
+            returns text
+            stable
+            language sql
+            return (
+                select
+                    pg_extension.extversion
+                from
+                    pg_catalog.pg_extension
+                where
+                    pg_extension.extname = $1
+            );
+
+        alter extension pg_readme
+            drop function pg_installed_extension_version(name);
+    end if;
+end;
+$$;
+
+--------------------------------------------------------------------------------------------------------------
+
 create type pg_readme_objects_for_reference as (
     table_objects regclass[]
     ,view_objects regclass[]
@@ -206,37 +237,6 @@ $markdown$,
             collection_name$,
             collection_type$
         );
-
---------------------------------------------------------------------------------------------------------------
-
-do $$
-begin
-    if not exists(
-        select from
-            pg_catalog.pg_proc
-        where
-            pg_proc.pronamespace = current_schema::regnamespace
-            and pg_proc.proname = 'pg_installed_extension_version'
-    )
-    then
-        create or replace function pg_installed_extension_version(pg_catalog.name)
-            returns text
-            stable
-            language sql
-            return (
-                select
-                    pg_extension.extversion
-                from
-                    pg_catalog.pg_extension
-                where
-                    pg_extension.extname = $1
-            );
-
-        alter extension pg_readme
-            drop function pg_installed_extension_version(name);
-    end if;
-end;
-$$;
 
 --------------------------------------------------------------------------------------------------------------
 

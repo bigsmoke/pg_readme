@@ -1,0 +1,13 @@
+\set ECHO none
+CREATE SCHEMA IF NOT EXISTS readme;
+SET SEARCH_PATH TO readme;
+NOTICE:  CREATE EXTENSION pg_readme WITH VERSION '0.6.3' CASCADE
+NOTICE:  installing required extension "hstore"
+NOTICE:  CALL test__pg_readme_pi_pseudo_attrs()
+NOTICE:  CALL test__pg_readme()
+NOTICE:  DROP EXTENSION pg_readme CASCADE
+NOTICE:  CREATE EXTENSION pg_readme WITH VERSION '0.1.0' CASCADE
+NOTICE:  ALTER EXTENSION pg_readme UPDATE TO '0.6.3'
+NOTICE:  CALL test__pg_readme_pi_pseudo_attrs()
+NOTICE:  CALL test__pg_readme()
+NOTICE:  DROP EXTENSION pg_readme CASCADE

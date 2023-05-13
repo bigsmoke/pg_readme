@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.6.2
-pg_readme_generated_at: 2023-05-09 15:24:11.519194+01
-pg_readme_version: 0.6.2
+pg_extension_version: 0.6.3
+pg_readme_generated_at: 2023-05-13 14:39:47.63524+01
+pg_readme_version: 0.6.3
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -182,7 +182,7 @@ deprecated in favor of `pg_readme.include_routine_definitions_like`, and
 
 ## The origins of the `pg_readme` extension
 
-`pg_readme`, together with a decent number of other PostgreSQL extensions, was
+`pg_readme`, together with a sizeable number of other PostgreSQL extensions, was
 developed as part of the backend for the super-scalable [FlashMQ MQTT SaaS
 service](https://www.flashmq.com).  Bundling and releasing this code publically
 has:
@@ -383,7 +383,10 @@ Procedure-local settings:
 
 This routine tests the `pg_readme_pi_pseudo_attrs()` function.
 
-The routine name is compliant with the `pg_tst` extension. An intentional choice has been made to not _depend_ on the `pg_tst` extension its test runner or developer-friendly assertions to keep the number of inter-extension dependencies to a minimum.
+The routine name is compliant with the `pg_tst` extension. An intentional
+choice has been made to not _depend_ on the `pg_tst` extension its test runner
+or developer-friendly assertions to keep the number of inter-extension
+dependencies to a minimum.
 
 Procedure-local settings:
 
@@ -435,6 +438,22 @@ CREATE TYPE pg_readme_objects_for_reference AS (
 CREATE DOMAIN pg_readme_collection_type AS text
   CHECK ((VALUE = ANY (ARRAY['extension'::text, 'schema'::text])));
 ```
+
+## Authors and contributors
+
+* [Rowan](https://www.bigsmoke.us/) originated this extension in 2022 while
+  developing the PostgreSQL backend for the [FlashMQ SaaS MQTT cloud
+  broker](https://www.flashmq.com/).  Rowan does not like to see himself as a
+  tech person or a tech writer, but, much to his chagrin, [he
+  _is_](https://blog.bigsmoke.us/category/technology). Some of his chagrin
+  about his disdain for the IT industry he poured into a book: [_Why
+  Programming Still Sucks_](https://www.whyprogrammingstillsucks.com/).  Much
+  more than a “tech bro”, he identifies as a garden gnome, fairy and ork rolled
+  into one, and his passion is really to [regreen and reenchant his
+  environment](https://sapienshabitat.com/).  One of his proudest achievements
+  is to be the third generation ecological gardener to grow the wild garden
+  around his beautiful [family holiday home in the forest of Norg, Drenthe,
+  the Netherlands](https://www.schuilplaats-norg.nl/) (available for rent!).
 
 ## Colophon
 
