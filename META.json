@@ -21,13 +21,13 @@
             }
         }
     },
-    "version": "0.6.3",
+    "version": "0.6.4",
     "abstract": "Generates a Markdown README from COMMENT objects found in the pg_description system catalog.",
     "provides": {
         "pg_readme": {
-            "file": "pg_readme--0.6.3.sql",
+            "file": "pg_readme--0.6.4.sql",
             "docfile": "README.md",
-            "version": "0.6.3"
+            "version": "0.6.4"
         }
     },
     "meta-spec": {
