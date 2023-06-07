@@ -322,7 +322,7 @@ begin
                 || _regtype::text || '`'
                 || E'\n\n';
             _text := _text || coalesce(obj_description(_regclass, 'pg_type') || E'\n\n',  '');
-            _text := _text || E'TODO: automatic type synopsis in `pg_readme_object_reference()`.\n\n';
+            _text := _text || E'Upgrade `pg_readme` for automatic type synopsis.\n\n';
         end loop;
     end if;
     assert _text is not null;

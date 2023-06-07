@@ -101,11 +101,11 @@ The following extra types have been defined _besides_ the implicit composite typ
 
 #### Type: `readme.pg_readme_objects_for_reference`
 
-TODO: automatic type synopsis in `pg_readme_object_reference()`.
+Upgrade `pg_readme` for automatic type synopsis.
 
 #### Type: `readme.pg_readme_collection_type`
 
-TODO: automatic type synopsis in `pg_readme_object_reference()`.
+Upgrade `pg_readme` for automatic type synopsis.
 
 ## Colophon
 
