@@ -10,7 +10,7 @@ DATA = $(wildcard sql/$(EXTENSION)*.sql)
 
 REGRESS = test_extension_update_paths
 
-PG_CONFIG = pg_config
+PG_CONFIG ?= pg_config
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
 
