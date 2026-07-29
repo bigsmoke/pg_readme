@@ -20,10 +20,10 @@ installcheck: export FALLBACK_SCHEMA_NAME?=
 installcheck: export EXTENSION_ENTRY_VERSIONS?=$(patsubst sql/$(EXTENSION)--%.sql,%,$(wildcard sql/$(EXTENSION)--[0-99].[0-99].[0-99].sql))
 
 README.md: sql/README.sql install
-	psql --quiet postgres < $< > $@
+	psql -X --quiet postgres < $< > $@
 
 META.json: sql/META.sql install
-	psql --quiet postgres < $< > $@
+	psql -X --quiet postgres < $< > $@
 
 install: install_subextension
 install_subextension:
