@@ -1,8 +1,8 @@
 ---
 pg_extension_name: pg_readme
-pg_extension_version: 0.7.0
-pg_readme_generated_at: 2024-09-02 22:38:30.962606+01
-pg_readme_version: 0.7.0
+pg_extension_version: 0.7.1
+pg_readme_generated_at: 2026-08-02 12:34:50.036686+01
+pg_readme_version: 0.7.1
 ---
 
 # The `pg_readme` PostgreSQL extension
@@ -393,7 +393,7 @@ Procedure-local settings:
   *  `SET search_path TO readme, ext, pg_temp`
 
 ```sql
-CREATE OR REPLACE PROCEDURE readme.test__pg_readme_pi_pseudo_attrs()
+CREATE OR REPLACE PROCEDURE test__pg_readme_pi_pseudo_attrs()
  LANGUAGE plpgsql
  SET search_path TO 'readme', 'ext', 'pg_temp'
 AS $procedure$
